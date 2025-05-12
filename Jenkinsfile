@@ -17,7 +17,8 @@ pipeline {
     stage('Build Inside Docker') {
       steps {
         script {
-          docker.image(env.DOCKER_IMAGE).inside {
+          docker.image(env.DOCKER_IMAGE).inside('-u root') {
+            sh 'chmod -R 777 /var/www/html'
             sh 'cp -r * /var/www/html'
           }
         }
