@@ -4,6 +4,7 @@ pipeline {
   environment {
     CONTAINER_NAME = 'website-builder'
     TARGET_DIR = '/var/www/html'
+    DOCKER_IMAGE = 'website' // Define your Docker image name here
   }
 
   stages {
@@ -16,7 +17,7 @@ pipeline {
     stage('Build Inside Docker') {
       steps {
         script {
-          docker.image(DOCKER_IMAGE).inside {
+          docker.image(env.DOCKER_IMAGE).inside {
             sh 'cp -r * /var/www/html'
           }
         }
@@ -28,15 +29,17 @@ pipeline {
         branch 'master'
       }
       steps {
-        sh 'docker cp . website:/var/www/html'
-        echo 'website published to Apache on port 82'
+        script {
+          sh "docker cp . ${env.CONTAINER_NAME}:/var/www/html"
+        }
+        echo 'Website published to Apache on port 82'
       }
     }
   }
 
   post {
     success {
-      echo "pipeline executed successfully for ${env.BRANCH_NAME}"
+      echo "Pipeline executed successfully for ${env.BRANCH_NAME}"
     }
     failure {
       echo "Pipeline failed for branch ${env.BRANCH_NAME}"
