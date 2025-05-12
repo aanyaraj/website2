@@ -28,7 +28,7 @@ pipeline {
         branch 'master'
       }
       steps {
-        sh 'docker cp . website:/var/www/html'
+        sh 'docker cp . website:latest:/var/www/html'
         echo 'website published to Apache on port 82'
       }
     }
