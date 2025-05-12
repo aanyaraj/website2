@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    CONTAINER_NAME = 'website'
+    CONTAINER_NAME = 'website-builder'
     TARGET_DIR = '/var/www/html'
   }
 
