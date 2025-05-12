@@ -43,5 +43,3 @@ pipeline {
     }
   }
 }
-success {
-  echo "Pipleline executed successfully for branch 
